@@ -79,4 +79,4 @@ const MetricCard = ({ title, value, change, status, icon, isDarkMode }) => {
     );
 };
 
-export default MetricCard; s
+export default MetricCard; 

@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import Icon from 'components/AppIcon';
+import Icon from '../../../components/AppIcon';
 
 const InventoryTable = ({ data, onProductSelect }) => {
     const [sortConfig, setSortConfig] = useState({ key: null, direction: 'asc' });

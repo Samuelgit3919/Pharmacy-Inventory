@@ -61,161 +61,125 @@ const Header = () => {
     };
 
     return (
-        <header className="fixed top-0 left-0 right-0 bg-surface border-b border-border z-navigation">
-            <div className="px-lg py-md">
-                <div className="flex items-center justify-between">
-                    {/* Logo */}
-                    <Link to="/" className="flex items-center space-x-3">
-                        <div className="w-8 h-8 bg-primary rounded-md flex items-center justify-center">
-                            <Icon name="Cross" size={20} color="white" strokeWidth={2.5} />
+        <header className="fixed top-0 left-0 right-0 bg-white border-b border-[#c3c5c9] z-50 px-4 sm:px-6 py-2 flex items-center justify-between">
+            {/* Logo */}
+            <Link to="/" className="flex items-center space-x-2">
+                <div className="w-8 h-8 bg-[#2E86AB] rounded flex items-center justify-center">
+                    <Icon name="Cross" size={16} color="white" strokeWidth={2.5} />
+                </div>
+                <div className="flex flex-col">
+                    <span className="text-sm font-semibold text-[#2E86AB] font-heading">MedInventory</span>
+                    <span className="text-xs text-gray-500 font-caption">Healthcare Solutions</span>
+                </div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden lg:flex items-center space-x-4">
+                {navigationItems.map((section, index) => (
+                    <div key={index} className="relative group">
+                        <button
+                            className={`flex items-center space-x-1 px-3 py-1 text-sm font-medium rounded-md transition-colors duration-200 ${isActiveSection(section.items)
+                                ? 'text-[#2E86AB] bg-[#2E86AB]/10'
+                                : 'text-gray-600 hover:text-[#2E86AB] hover:bg-[#2E86AB]/5'
+                                }`}
+                        >
+                            <span>{section.label}</span>
+                            <Icon name="ChevronDown" size={12} />
+                        </button>
+
+                        {/* Dropdown Menu */}
+                        <div className="absolute top-full left-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            {section.items.map((item, itemIndex) => (
+                                <Link
+                                    key={itemIndex}
+                                    to={item.path}
+                                    className={`flex items-center space-x-2 px-4 py-2 text-sm transition-colors duration-200 ${isActivePath(item.path)
+                                        ? 'text-[#2E86AB] bg-[#2E86AB]/10'
+                                        : 'text-gray-700 hover:text-[#2E86AB] hover:bg-[#2E86AB]/5'
+                                        }`}
+                                >
+                                    <Icon name={item.icon} size={16} />
+                                    <span>{item.label}</span>
+                                </Link>
+                            ))}
                         </div>
-                        <div className="flex flex-col">
-                            <span className="text-lg font-semibold text-text-primary font-heading">
-                                MedInventory
-                            </span>
-                            <span className="text-xs text-text-secondary font-caption">
-                                Healthcare Solutions
-                            </span>
+                    </div>
+                ))}
+            </nav>
+
+            {/* User Context Panel */}
+            <div className="hidden lg:flex items-center space-x-4">
+                <div className="flex items-center space-x-1 text-sm text-gray-500">
+                    <Icon name="MapPin" size={14} />
+                    <span>Main Pharmacy</span>
+                </div>
+                <div className="relative group">
+                    <button className="flex items-center space-x-2 px-2 py-1 text-sm text-gray-700 rounded-md hover:bg-gray-100 transition-colors duration-200">
+                        <div className="w-6 h-6 bg-[#2E86AB]/10 rounded-full flex items-center justify-center">
+                            <Icon name="User" size={12} />
                         </div>
-                    </Link>
+                        <span>Dr. Smith</span>
+                        <Icon name="ChevronDown" size={12} />
+                    </button>
+                    <div className="absolute top-full right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                        <div className="py-1">
+                            <button className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <Icon name="Settings" size={14} />
+                                <span>Settings</span>
+                            </button>
+                            <button className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                                <Icon name="LogOut" size={14} />
+                                <span>Sign Out</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden lg:flex items-center space-x-8">
-                        {navigationItems.map((section, sectionIndex) => (
-                            <div key={sectionIndex} className="relative group">
-                                <button className={`flex items-center space-x-2 px-4 py-2 rounded-md transition-smooth font-medium ${isActiveSection(section.items)
-                                    ? 'text-primary bg-primary/10' : 'text-text-secondary hover:text-primary hover:bg-primary/5'
-                                    }`}>
-                                    <span>{section.label}</span>
-                                    <Icon name="ChevronDown" size={16} />
-                                </button>
+            {/* Mobile Menu Button */}
+            <button
+                onClick={toggleMobileMenu}
+                className="lg:hidden p-2 text-gray-600 hover:bg-gray-100 rounded-md transition-colors duration-200"
+            >
+                <Icon name={isMobileMenuOpen ? "X" : "Menu"} size={20} />
+            </button>
 
-                                {/* Dropdown Menu */}
-                                <div className="absolute top-full left-0 mt-1 w-64 bg-surface border border-border rounded-md shadow-modal opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-smooth z-dropdown">
-                                    <div className="py-2">
-                                        {section.items.map((item, itemIndex) => (
-                                            <Link
-                                                key={itemIndex}
-                                                to={item.path}
-                                                className={`flex items-center space-x-3 px-4 py-3 transition-smooth ${isActivePath(item.path)
-                                                    ? 'text-primary bg-primary/10 border-r-2 border-primary' : 'text-text-primary hover:text-primary hover:bg-primary/5'
-                                                    }`}
-                                            >
-                                                <Icon name={item.icon} size={18} />
-                                                <div className="flex-1">
-                                                    <div className="font-medium">{item.label}</div>
-                                                    <div className="text-xs text-text-secondary">{item.description}</div>
-                                                </div>
-                                            </Link>
-                                        ))}
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </nav>
-
-                    {/* User Context Panel */}
-                    <div className="hidden lg:flex items-center space-x-4">
-                        <div className="flex items-center space-x-2 text-sm text-text-secondary">
-                            <Icon name="MapPin" size={16} />
+            {/* Mobile Navigation */}
+            {isMobileMenuOpen && (
+                <div className="lg:hidden mt-2 w-full bg-white border-t border-gray-200">
+                    {navigationItems.map((section, index) => (
+                        <div key={index} className="py-2">
+                            <div className="px-4 text-sm font-medium text-gray-600">{section.label}</div>
+                            {section.items.map((item, itemIndex) => (
+                                <Link
+                                    key={itemIndex}
+                                    to={item.path}
+                                    onClick={toggleMobileMenu}
+                                    className={`flex items-center space-x-2 px-4 py-2 text-sm rounded-md transition-colors duration-200 ${isActivePath(item.path)
+                                        ? 'text-[#2E86AB] bg-[#2E86AB]/10'
+                                        : 'text-gray-700 hover:text-[#2E86AB] hover:bg-[#2E86AB]/5'
+                                        }`}
+                                >
+                                    <Icon name={item.icon} size={16} />
+                                    <span>{item.label}</span>
+                                </Link>
+                            ))}
+                        </div>
+                    ))}
+                    <div className="px-4 py-2 border-t border-gray-200">
+                        <div className="flex items-center space-x-2 text-sm text-gray-600">
+                            <Icon name="MapPin" size={14} />
                             <span>Main Pharmacy</span>
                         </div>
-                        <div className="relative group">
-                            <button className="flex items-center space-x-2 px-3 py-2 rounded-md border border-border hover:bg-background transition-smooth">
-                                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                                    <Icon name="User" size={16} color="currentColor" />
-                                </div>
-                                <div className="text-left">
-                                    <div className="text-sm font-medium text-text-primary">Dr. Smith</div>
-                                    <div className="text-xs text-text-secondary">Pharmacy Manager</div>
-                                </div>
-                                <Icon name="ChevronDown" size={16} />
-                            </button>
-
-                            {/* User Dropdown */}
-                            <div className="absolute top-full right-0 mt-1 w-48 bg-surface border border-border rounded-md shadow-modal opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-smooth z-dropdown">
-                                <div className="py-2">
-                                    <button className="flex items-center space-x-2 w-full px-4 py-2 text-left text-text-primary hover:bg-background transition-smooth">
-                                        <Icon name="Settings" size={16} />
-                                        <span>Settings</span>
-                                    </button>
-                                    <button className="flex items-center space-x-2 w-full px-4 py-2 text-left text-text-primary hover:bg-background transition-smooth">
-                                        <Icon name="Phone" size={16} />
-                                        <span>Emergency Contacts</span>
-                                    </button>
-                                    <hr className="my-1 border-border" />
-                                    <button className="flex items-center space-x-2 w-full px-4 py-2 text-left text-error hover:bg-error/5 transition-smooth">
-                                        <Icon name="LogOut" size={16} />
-                                        <span>Sign Out</span>
-                                    </button>
-                                </div>
+                        <div className="mt-2 flex items-center space-x-2 text-sm text-gray-700">
+                            <div className="w-6 h-6 bg-[#2E86AB]/10 rounded-full flex items-center justify-center">
+                                <Icon name="User" size={12} />
                             </div>
+                            <span>Dr. Smith - Pharmacy Manager</span>
                         </div>
                     </div>
-
-                    {/* Mobile Menu Button */}
-                    <button
-                        onClick={toggleMobileMenu}
-                        className="lg:hidden p-2 rounded-md border border-border hover:bg-background transition-smooth"
-                    >
-                        <Icon name={isMobileMenuOpen ? "X" : "Menu"} size={20} />
-                    </button>
                 </div>
-
-                {/* Mobile Navigation */}
-                {isMobileMenuOpen && (
-                    <div className="lg:hidden mt-4 pb-4 border-t border-border">
-                        <div className="pt-4 space-y-2">
-                            {navigationItems.map((section, sectionIndex) => (
-                                <div key={sectionIndex} className="space-y-1">
-                                    <div className="px-2 py-1 text-sm font-medium text-text-secondary">
-                                        {section.label}
-                                    </div>
-                                    {section.items.map((item, itemIndex) => (
-                                        <Link
-                                            key={itemIndex}
-                                            to={item.path}
-                                            onClick={() => setIsMobileMenuOpen(false)}
-                                            className={`flex items-center space-x-3 px-4 py-3 rounded-md transition-smooth ${isActivePath(item.path)
-                                                ? 'text-primary bg-primary/10' : 'text-text-primary hover:text-primary hover:bg-primary/5'
-                                                }`}
-                                        >
-                                            <Icon name={item.icon} size={18} />
-                                            <div className="flex-1">
-                                                <div className="font-medium">{item.label}</div>
-                                                <div className="text-xs text-text-secondary">{item.description}</div>
-                                            </div>
-                                        </Link>
-                                    ))}
-                                </div>
-                            ))}
-
-                            {/* Mobile User Info */}
-                            <div className="pt-4 mt-4 border-t border-border">
-                                <div className="flex items-center space-x-3 px-4 py-3">
-                                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center">
-                                        <Icon name="User" size={20} />
-                                    </div>
-                                    <div className="flex-1">
-                                        <div className="font-medium text-text-primary">Dr. Smith</div>
-                                        <div className="text-sm text-text-secondary">Main Pharmacy • Manager</div>
-                                    </div>
-                                </div>
-                                <div className="px-4 space-y-1">
-                                    <button className="flex items-center space-x-2 w-full px-2 py-2 text-left text-text-primary hover:bg-background rounded-md transition-smooth">
-                                        <Icon name="Settings" size={16} />
-                                        <span>Settings</span>
-                                    </button>
-                                    <button className="flex items-center space-x-2 w-full px-2 py-2 text-left text-text-primary hover:bg-background rounded-md transition-smooth">
-                                        <Icon name="Phone" size={16} />
-                                        <span>Emergency Contacts</span>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
-            </div>
+            )}
         </header>
     );
 };
