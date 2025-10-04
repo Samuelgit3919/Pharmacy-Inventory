@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400&display=swap');
+
+@layer base {
+    body {
+        font-feature-settings: "rlig" 1, "calt" 1;
+    }
+
+    :root {
+        /* Colors */
+        --color-primary: #2E86AB;
+        --color-secondary: #1B5E7A;
+        --color-accent: #F18F01;
+
+        --color-background: #FAFBFC;
+        --color-surface: #FFFFFF;
+
+        --color-text-primary: #1A1D23;
+        --color-text-secondary: #6C757D;
+
+        --color-success: #28A745;
+        --color-warning: #FFC107;
+        --color-error: #DC3545;
+
+        /* Shadows */
+        --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.1);
+        --shadow-modal: 0 4px 12px rgba(0, 0, 0, 0.15);
+
+        /* Borders */
+        --border-color: rgba(0, 0, 0, 0.1);
+        --border-radius-sm: 4px;
+        --border-radius-md: 6px;
+
+        /* Spacing */
+        --spacing-xs: 4px;
+        --spacing-sm: 8px;
+        --spacing-md: 16px;
+        --spacing-lg: 24px;
+        --spacing-xl: 32px;
+    }
+
+
+
+
+}
+
+@layer components {
+
+
+
+
+    .btn-primary {
+        @apply transition-colors duration-200;
+    }
+
+    .btn-secondary {
+        @apply transition-colors duration-200;
+    }
+
+    .alert-success {
+        @apply border;
+    }
+
+    .alert-warning {
+        @apply border;
+    }
+
+    .alert-error {
+        @apply border;
+    }
+
+    .transition-smooth {
+        @apply transition-all duration-200;
+    }
+}
